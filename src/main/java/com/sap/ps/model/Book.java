@@ -1,19 +1,34 @@
 package com.sap.ps.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.WhereJoinTable;
+
+import javax.persistence.*;
 
 @Entity
+@DynamicUpdate
+@Table(name = "BOOKS")
 public class Book {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column
     private String description;
+
+    @Column
     private String author;
+
+    @ManyToOne
+    @JoinTable(name="BORROWS")
+    @WhereJoinTable( clause = "status = 'BORROWED'")
+    @JsonIgnoreProperties("books")
+    private User user;
 
     public Book() {
 
@@ -64,5 +79,13 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
