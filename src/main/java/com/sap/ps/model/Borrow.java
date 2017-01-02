@@ -24,6 +24,12 @@ public class Borrow {
 
     }
 
+    public Borrow(Book book, User user, String status) {
+        this.book = book;
+        this.user = user;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

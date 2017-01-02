@@ -1,11 +1,11 @@
 package com.sap.ps.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @DynamicUpdate
@@ -24,11 +24,13 @@ public class Book {
     @Column
     private String author;
 
-    @ManyToOne
-    @JoinTable(name="BORROWS")
+    @Column
+    private String status;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "books")
     @WhereJoinTable( clause = "status = 'BORROWED'")
     @JsonIgnoreProperties("books")
-    private User user;
+    private List<User> users;
 
     public Book() {
 
@@ -81,11 +83,20 @@ public class Book {
         this.author = author;
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

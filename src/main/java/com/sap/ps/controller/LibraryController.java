@@ -37,6 +37,7 @@ public class LibraryController {
         return this.bookRepository.findOne(Long.valueOf(id));
     }
 
+    //update book
     @RequestMapping(value="/books/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book) {
         if (book.getId() == null) {
@@ -71,6 +72,14 @@ public class LibraryController {
     public ResponseEntity<Borrow> borrowBook(@RequestBody Borrow borrow) {
         Borrow result = this.borrowRepository.save(borrow);
         return new ResponseEntity<Borrow>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/borrows/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Borrow> returnBook(@PathVariable String id) {
+        Borrow borrow = this.borrowRepository.findOne(Long.valueOf(id));
+        borrow.setStatus("RETURNED");
+        this.borrowRepository.save(borrow);
+        return new ResponseEntity<Borrow>(HttpStatus.NO_CONTENT);
     }
 
 }

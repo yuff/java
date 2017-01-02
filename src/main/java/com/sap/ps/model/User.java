@@ -31,14 +31,13 @@ public class User {
     @Column
     private String displayName;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "BORROWS",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName="id")
     )
     @WhereJoinTable( clause = "status = 'BORROWED'")
-    @JsonIgnoreProperties("user")
     private List<Book> books = new ArrayList<Book>();
 
     public User() {
