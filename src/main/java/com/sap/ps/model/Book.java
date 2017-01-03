@@ -1,11 +1,22 @@
 package com.sap.ps.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.WhereJoinTable;
 
-import javax.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @DynamicUpdate
@@ -27,13 +38,26 @@ public class Book {
     @Column
     private String status;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "books")
-    @WhereJoinTable( clause = "status = 'BORROWED'")
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "BORROWS",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName="id")
+    )
+//    @WhereJoinTable( clause = "status = 'BORROWED'")
     @JsonIgnoreProperties("books")
     private List<User> users;
 
     public Book() {
 
+    }
+    
+    public Book(Book book ){
+    	this.id = book.id;
+    	this.title = book.title;
+    	this.author = book.author;
+    	this.description = book.description;
+    	this.status = book.status;
     }
 
     public Book(String title) {

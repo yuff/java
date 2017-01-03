@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sap.ps</groupId>
-	<artifactId>library</artifactId>
+	<artifactId>library_spring_test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>library</name>
+	<name>library_spring_test</name>
 	<description>book library management system</description>
 
 	<parent>

@@ -31,17 +31,21 @@ public class User {
     @Column
     private String displayName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "BORROWS",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName="id")
-    )
-    @WhereJoinTable( clause = "status = 'BORROWED'")
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
+//    @JoinTable(
+//            name = "BORROWS",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName="id")
+//    )
+//    @WhereJoinTable( clause = "status = 'BORROWED'")
     private List<Book> books = new ArrayList<Book>();
 
     public User() {
 
+    }
+    
+    public User(Long id) {
+    	this.id = id;
     }
 
     public Long getId() {
