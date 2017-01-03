@@ -52,12 +52,12 @@ public class Book {
 
     }
     
-    public Book(Book book ){
-    	this.id = book.id;
-    	this.title = book.title;
-    	this.author = book.author;
-    	this.description = book.description;
-    	this.status = book.status;
+    public Book(Book book){
+    	this.id = book.getId();
+    	this.title = book.getTitle();
+    	this.author = book.getAuthor();
+    	this.description = book.getDescription();
+    	this.status = book.getStatus();
     }
 
     public Book(String title) {

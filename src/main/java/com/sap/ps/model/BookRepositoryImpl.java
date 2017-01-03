@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.sap.ps.LibraryUtil;
+
 /** 
  * 1. the implement of custom repository name of BookRepository should be BookRepository + Impl
  * details：https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.core-concepts
@@ -23,11 +25,19 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 	public Book updateBook(BookPatch bookPatch) {
 		Book book = new Book(bookPatch);
 		Book oldBook = em.find(Book.class, bookPatch.getId());
-		BeanUtils.copyProperties(oldBook, book);
+		BeanUtils.copyProperties(book, oldBook, LibraryUtil.getNullPropertyNames(book));
 		if (!StringUtils.isEmpty(bookPatch.getUserId())) {
 			User user = em.find(User.class, Long.valueOf(bookPatch.getUserId()));
-			oldBook.getUsers().add(user);
+			//TODO: exact status to enum
+			if (!StringUtils.isEmpty(book.getStatus()) && book.getStatus().equals("BORROWED")) {
+				//if status is BORROWED, borrow book
+				oldBook.getUsers().add(user);
+			} else {
+				//if status is null or not equals to BORROWED while user id not null, return book
+				oldBook.getUsers().remove(user);
+			}
 		}
+
 		return em.merge(oldBook);
 	}
 

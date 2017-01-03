@@ -38,8 +38,8 @@ public class LibraryController {
     }
 
     /***
-     * update book, status = null && userId !== null, return book
-     * status != null && userId != null, borrow book
+     * update book, status = null or status != "BORROWED" && userId !== null, return book
+     * status = "BORROWED" && userId != null, borrow book
      * */
     @RequestMapping(value="/books/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody BookPatch book) {
@@ -47,16 +47,6 @@ public class LibraryController {
             book.setId(Long.valueOf(id));
         }
         Book result = this.bookRepository.updateBook(book);
-//        Book oldBook = this.bookRepository.findOne(Long.valueOf(id));
-//        Book result = null;
-//        if (!StringUtils.isEmpty(book.getStatus()) && !StringUtils.isEmpty(book.getUserId())) {
-//        	User user = this.userRepository.findOne(Long.valueOf(book.getUserId()));
-//        	oldBook.getUsers().add(user);
-//        	oldBook.setStatus(book.getStatus());
-//        	result = this.bookRepository.save(oldBook);
-//        } else if (StringUtils.isEmpty(book.getStatus()) && !StringUtils.isEmpty(book.getUserId())) {
-//        	//TODO:
-//        }
         return new ResponseEntity<Book>(result, HttpStatus.OK);
     }
 
