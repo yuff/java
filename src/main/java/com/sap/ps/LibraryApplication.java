@@ -2,8 +2,11 @@ package com.sap.ps;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import com.sap.icd.odatav2.spring.SpringODataLibraryPackageMarker;
 
 @SpringBootApplication
+@ComponentScan(basePackageClasses = { SpringODataLibraryPackageMarker.class, LibraryApplication.class })
 public class LibraryApplication {
 
 	public static void main(String[] args) {

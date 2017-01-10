@@ -29,9 +29,11 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 		if (!StringUtils.isEmpty(bookPatch.getUserId())) {
 			User user = em.find(User.class, Long.valueOf(bookPatch.getUserId()));
 			//TODO: exact status to enum
-			if (!StringUtils.isEmpty(book.getStatus()) && book.getStatus().equals("BORROWED")) {
-				//if status is BORROWED, borrow book
-				oldBook.getUsers().add(user);
+			if (!StringUtils.isEmpty(book.getState()) && book.getState().equals("unavailable")) {
+				//if status is unavailable, borrow book
+				if (!oldBook.getUsers().contains(user)) {
+					oldBook.getUsers().add(user);
+				}
 			} else {
 				//if status is null or not equals to BORROWED while user id not null, return book
 				oldBook.getUsers().remove(user);
@@ -40,11 +42,4 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 
 		return em.merge(oldBook);
 	}
-
-//	private Book borrowBook(Long userId, Long bookId) {
-//		Book oldBook = em.find(Book.class, bookId);
-//    	User user = em.find(User.class, userId);
-//    	oldBook.getUsers().add(user);
-//    	return oldBook;
-//	}
 }

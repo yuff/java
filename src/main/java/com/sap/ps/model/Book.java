@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,11 +14,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
+import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.WhereJoinTable;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@EdmEntitySet
+@EdmEntityType
 @Entity
 @DynamicUpdate
 @Table(name = "BOOKS")
@@ -36,15 +41,14 @@ public class Book {
     private String author;
 
     @Column
-    private String status;
+    private String state;
 
-    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "BORROWS",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName="id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName="id")
     )
-//    @WhereJoinTable( clause = "status = 'BORROWED'")
     @JsonIgnoreProperties("books")
     private List<User> users;
 
@@ -57,7 +61,7 @@ public class Book {
     	this.title = book.getTitle();
     	this.author = book.getAuthor();
     	this.description = book.getDescription();
-    	this.status = book.getStatus();
+    	this.state = book.getState();
     }
 
     public Book(String title) {
@@ -115,12 +119,12 @@ public class Book {
         this.users = users;
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 
 }

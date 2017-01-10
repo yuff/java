@@ -1,16 +1,24 @@
 package com.sap.ps.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.WhereJoinTable;
-
-import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
+import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
+import org.hibernate.annotations.DynamicUpdate;
+
+@EdmEntitySet
+@EdmEntityType
 @Entity
 @Table(name = "USERS")
 @DynamicUpdate
@@ -30,6 +38,9 @@ public class User {
 
     @Column
     private String displayName;
+    
+    @Column
+    private String email;
 
     @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
 //    @JoinTable(
@@ -88,7 +99,15 @@ public class User {
         this.displayName = displayName;
     }
 
-    public List<Book> getBooks() {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Book> getBooks() {
         return books;
     }
 
