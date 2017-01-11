@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.WhereJoinTable;
 
 @EdmEntitySet
 @EdmEntityType
@@ -49,6 +50,7 @@ public class User {
 //            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName="id")
 //    )
 //    @WhereJoinTable( clause = "status = 'BORROWED'")
+    @WhereJoinTable(clause = "state='borrow'")
     private List<Book> books = new ArrayList<Book>();
 
     public User() {

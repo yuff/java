@@ -1,5 +1,6 @@
 package com.sap.ps.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,9 @@ public class Borrow {
     @PrimaryKeyJoinColumn(name="book_id", referencedColumnName="id")
     private Book book;
 
+    @Column(columnDefinition="varchar default 'borrow'")
+    private String state;
+    
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +56,14 @@ public class Borrow {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
     
 }

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
 import org.hibernate.annotations.DynamicUpdate;
-
+import org.hibernate.annotations.WhereJoinTable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,7 +41,7 @@ public class Book {
     private String author;
 
     @Column
-    private String state;
+    private String state = "available";
 
     @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinTable(
@@ -50,6 +50,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName="id")
     )
     @JsonIgnoreProperties("books")
+    @WhereJoinTable(clause = "state='borrow'")
     private List<User> users;
 
     public Book() {

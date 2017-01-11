@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Slf4j
-@Resource(name = "psLibrary", type = DataSource.class)
+//@Resource(name = "psLibrary", type = DataSource.class)
 public class DbConfig {
 
 	@Profile({ "neo", "default" })

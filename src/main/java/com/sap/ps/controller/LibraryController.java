@@ -29,7 +29,6 @@ public class LibraryController {
     LibraryController(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
-
     }
 
     @RequestMapping("/books")
