@@ -6,7 +6,6 @@ import org.apache.olingo.odata2.jpa.processor.api.model.JPAEdmExtension;
 import org.apache.olingo.odata2.jpa.processor.api.model.JPAEdmSchemaView;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class BookLibraryExtension implements JPAEdmExtension{
 

@@ -1,5 +1,7 @@
 package com.sap.ps.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 
 /**
@@ -20,7 +27,10 @@ import javax.persistence.Table;
 @Table(name = "BORROWS")
 public class Borrow {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,
+			generator = "s_borrow")
+    @SequenceGenerator(name = "s_borrow", sequenceName = "S_BORROW",
+	allocationSize = 1)
     private Long id;
     
     @ManyToOne(fetch=FetchType.EAGER)
@@ -31,8 +41,26 @@ public class Borrow {
     @PrimaryKeyJoinColumn(name="book_id", referencedColumnName="id")
     private Book book;
 
-    @Column(columnDefinition="varchar default 'borrow'")
+    @Column
     private String state;
+    
+    @Column
+    @Type(type="date")
+    private Date startDate;
+    
+    @Column
+    @Type(type="date")
+    private Date updateDate;
+    
+    @PrePersist
+    protected void onCreate() {
+    	startDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+    	updateDate = new Date();
+    }
     
 	public Long getId() {
 		return id;
@@ -64,6 +92,22 @@ public class Borrow {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
     
 }

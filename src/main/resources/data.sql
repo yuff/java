@@ -3,4 +3,4 @@ insert into BOOKS (ID, TITLE, DESCRIPTION, AUTHOR, STATE) values (2, 'Spring 8 i
 
 insert into USERS (ID, NAME, FIRST_NAME,LAST_NAME,DISPLAY_NAME,EMAIL) values(1,'I336048','Feifei', 'Yu', 'Yu Feifei','feifei.yu@sap.com');
 
-insert into BORROWS(ID, BOOK_ID,USER_ID) values(1,1,1);
+insert into BORROWS (ID, BOOK_ID,USER_ID, STATE) values(S_BORROW.NEXTVAL,1,1, 'borrow');

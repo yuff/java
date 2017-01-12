@@ -37,7 +37,7 @@ public class LibraryConfig {
         return bean;
     }
     
-	@Profile({ "neo", "default" })
+	@Profile({ "neo", "default", "prod" })
 	@Bean(destroyMethod = "")
 	public DataSource jndiDataSource() throws SQLException {
 		DataSource ds = new JndiDataSourceLookup().getDataSource("java:comp/env/jdbc/psLibrary");

@@ -1,5 +1,7 @@
 package com.sap.ps.model;
 
+import java.math.BigInteger;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -25,8 +27,8 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 	private EntityManagerFactory entityManagerFactory;
     
 	private static final String UPDATE_BOOK_STATE = "UPDATE BOOKS b SET STATE = ?1 WHERE ID = ?2";
-	private static final String BORROW_BOOK = "INSERT INTO BORROWS (USER_ID,BOOK_ID) VALUES (?1, ?2)";
-	private static final String RETURN_BOOK = "UPDATE BORROWS br SET STATE = 'return' WHERE USER_ID = ?1 AND BOOK_ID = ?2";
+	private static final String BORROW_BOOK = "INSERT INTO BORROWS (ID, USER_ID,BOOK_ID, STATE, START_DATE) VALUES (S_BORROW.NEXTVAL, ?1, ?2,'borrow', CURRENT_DATE)";
+	private static final String RETURN_BOOK = "UPDATE BORROWS br SET STATE = 'return',UPDATE_DATE=CURRENT_DATE WHERE USER_ID = ?1 AND BOOK_ID = ?2 and STATE = 'borrow'";
 	private static final String BOOK_STATE_BORROWED = "unavailable";
 	private static final String BOOK_STATE_IN_STORE = "available";
     
@@ -71,6 +73,8 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 		updateBookState.setParameter(1, BOOK_STATE_BORROWED);
 		updateBookState.setParameter(2, bookId);
 		
+//		Query q = em.createNativeQuery("select nextval('S_BORROW')");
+//		Long key = ((BigInteger)q.getSingleResult()).longValue();
 		Query borrowBook = em.createNativeQuery(BORROW_BOOK);
 		borrowBook.setParameter(1, userId);
 		borrowBook.setParameter(2, bookId);

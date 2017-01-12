@@ -11,21 +11,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.WhereJoinTable;
 
 @EdmEntitySet
 @EdmEntityType
 @Entity
 @Table(name = "USERS")
-@DynamicUpdate
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,
+			generator = "s_user")
+    @SequenceGenerator(name = "s_user", sequenceName = "S_USER",
+	allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
@@ -44,12 +46,6 @@ public class User {
     private String email;
 
     @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
-//    @JoinTable(
-//            name = "BORROWS",
-//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName="id")
-//    )
-//    @WhereJoinTable( clause = "status = 'BORROWED'")
     @WhereJoinTable(clause = "state='borrow'")
     private List<Book> books = new ArrayList<Book>();
 

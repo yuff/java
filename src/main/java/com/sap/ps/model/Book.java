@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
@@ -28,7 +29,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "BOOKS")
 public class Book {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,
+			generator = "s_book")
+    @SequenceGenerator(name = "s_book", sequenceName = "S_BOOK",
+	allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
