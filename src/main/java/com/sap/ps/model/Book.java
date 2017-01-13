@@ -12,17 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
+import org.apache.olingo.odata2.api.annotation.edm.EdmNavigationProperty;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 import org.hibernate.annotations.WhereJoinTable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@EdmEntitySet
+//@EdmEntitySet
 @EdmEntityType
 @Entity
 @DynamicUpdate
@@ -57,6 +60,11 @@ public class Book {
     @WhereJoinTable(clause = "state='borrow'")
     private List<User> users;
 
+    @OneToMany(mappedBy="book")
+    @Where(clause="state='return'")
+    @EdmNavigationProperty(name="BorrowHistory")
+    private List<Borrow> borrowHistory;
+    
     public Book() {
 
     }
@@ -131,5 +139,13 @@ public class Book {
     public void setState(String state) {
         this.state = state;
     }
+
+	public List<Borrow> getBorrowHistory() {
+		return borrowHistory;
+	}
+
+	public void setBorrowHistory(List<Borrow> borrowHistory) {
+		this.borrowHistory = borrowHistory;
+	}
 
 }

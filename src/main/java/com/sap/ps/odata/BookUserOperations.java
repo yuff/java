@@ -1,5 +1,7 @@
 package com.sap.ps.odata;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.olingo.odata2.api.annotation.edm.EdmFunctionImport;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.sap.icd.odatav2.spring.messages.MessageBuffer;
 import com.sap.ps.model.BookRepository;
+import com.sap.ps.model.Borrow;
 import com.sap.ps.model.UserRepository;
 
 @Component

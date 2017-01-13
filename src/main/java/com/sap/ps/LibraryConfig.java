@@ -2,7 +2,6 @@ package com.sap.ps;
 
 import java.sql.SQLException;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -21,8 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @Slf4j
 //@Resource(name = "psLibrary", type = DataSource.class)
-public class LibraryConfig {
-
+public class LibraryConfig {	
     @Bean
     public FilterRegistrationBean corsFilter(){
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

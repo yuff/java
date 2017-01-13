@@ -1,6 +1,7 @@
 package com.sap.ps.model;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
