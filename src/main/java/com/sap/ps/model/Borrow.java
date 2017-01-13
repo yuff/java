@@ -44,12 +44,10 @@ public class Borrow {
     @Column
     private String state;
     
-    @Column
-    @Type(type="date")
+    @Column(columnDefinition="DATETIME")
     private Date startDate;
     
-    @Column
-    @Type(type="date")
+    @Column(columnDefinition="DATETIME")
     private Date updateDate;
     
     @PrePersist

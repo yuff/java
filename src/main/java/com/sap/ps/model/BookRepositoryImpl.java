@@ -28,8 +28,8 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 	private EntityManagerFactory entityManagerFactory;
     
 	private static final String UPDATE_BOOK_STATE = "UPDATE BOOKS b SET STATE = ?1 WHERE ID = ?2";
-	private static final String BORROW_BOOK = "INSERT INTO BORROWS (ID, USER_ID,BOOK_ID, STATE, START_DATE) VALUES (S_BORROW.NEXTVAL, ?1, ?2,'borrow', CURRENT_DATE)";
-	private static final String RETURN_BOOK = "UPDATE BORROWS br SET STATE = 'return',UPDATE_DATE=CURRENT_DATE WHERE USER_ID = ?1 AND BOOK_ID = ?2 and STATE = 'borrow'";
+	private static final String BORROW_BOOK = "INSERT INTO BORROWS (ID, USER_ID,BOOK_ID, STATE, START_DATE) VALUES (S_BORROW.NEXTVAL, ?1, ?2,'borrow', CURRENT_TIMESTAMP)";
+	private static final String RETURN_BOOK = "UPDATE BORROWS br SET STATE = 'return',UPDATE_DATE=CURRENT_TIMESTAMP WHERE USER_ID = ?1 AND BOOK_ID = ?2 and STATE = 'borrow'";
 	private static final String BOOK_STATE_BORROWED = "unavailable";
 	private static final String BOOK_STATE_IN_STORE = "available";
     
