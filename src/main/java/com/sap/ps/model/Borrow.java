@@ -15,9 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
-
 /**
  * TODO: this entity is not necessary currently, we are not using Borrows api currently,
  * leave it here.
