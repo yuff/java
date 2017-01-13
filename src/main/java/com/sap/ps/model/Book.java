@@ -62,7 +62,7 @@ public class Book {
 
     @OneToMany(mappedBy="book")
     @Where(clause="state='return'")
-    @EdmNavigationProperty(name="BorrowHistory")
+    @JsonIgnoreProperties("book")
     private List<Borrow> borrowHistory;
     
     public Book() {
